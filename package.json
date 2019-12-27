@@ -11,10 +11,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.7.2",
     "dotenv": "^8.2.0",
+    "jsonwebtoken": "^8.5.1",
     "koa": "^2.11.0",
+    "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
-    "mongodb": "^3.4.1"
+    "md5": "^2.2.1",
+    "mongodb": "^3.4.1",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",

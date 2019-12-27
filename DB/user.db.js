@@ -1,7 +1,50 @@
 import mongoDB from "./index"
-exports.getUserByEmail = email => {
+const db = "bookManagement"
+const collection = "user"
+
+exports.getUserByUid = uid =>
   mongoDB
-    .db("bookManagement")
-    .collection("user")
-    .find({ email })
-}
+    .db(db)
+    .collection(collection)
+    .findOne({ uid })
+exports.getUserByEmail = email =>
+  mongoDB
+    .db(db)
+    .collection(collection)
+    .findOne({ email })
+
+exports.createUser = user =>
+  mongoDB
+    .db(db)
+    .collection(collection)
+    .insertOne(user)
+
+exports.getOwnerDetails = (uid, ownerId) =>
+  mongoDB
+    .db(db)
+    .collection(collection)
+    .countDocuments({ uid, "ownerDetails.uid": ownerId })
+
+exports.addOwner = (uid, doc) =>
+  mongoDB
+    .db(db)
+    .collection(collection)
+    .updateOne({ uid }, { $push: { ownerDetails: doc } })
+
+exports.addTeamMember = (uid, tUid) =>
+  mongoDB
+    .db(db)
+    .collection(collection)
+    .updateOne({ uid }, { $push: { teamDetails: tUid } })
+
+exports.isTeamDetailsExists = uid =>
+  mongoDB
+    .db(db)
+    .collection(collection)
+    .countDocuments({ uid, teamDetails: { $exists: true } })
+
+exports.updateUser = (uid, doc) =>
+  mongoDB
+    .db(db)
+    .collection(collection)
+    .updateOne({ uid }, { $set: doc })
