@@ -5,7 +5,7 @@ import {
   getUserByUid
 } from "../../DB/user.db"
 
-const error = (message, field) => {
+export const error = (message, field) => {
   const err = new Error(message)
   err.field = field
   return err
@@ -16,7 +16,7 @@ const passwordValidator = new RegExp(
 const emailValidator = new RegExp(
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 )
-const nameValidator = new RegExp(/^[a-zA-Z ]{2,30}$/)
+exports.nameValidator = new RegExp(/^[a-zA-Z ]{2,30}$/)
 
 exports.validateName = ctx => {
   const { name } = ctx.request.body
@@ -69,8 +69,8 @@ exports.validateAddOwnerDetails = async ctx => {
 exports.validateOwnerIdAndRole = async ctx => {
   const { ownerId, role } = ctx.request.body
   const user = await getUserByUid(ctx.state.user.uid)
-  const bool = user.ownerDetails.filter(e=>e.uid === ownerId)
-  if(!bool) return error("ownerId not found")
+  const bool = user.ownerDetails.filter(e => e.uid === ownerId)
+  if (!bool) return error("ownerId not found")
   return null
 }
 
@@ -88,10 +88,7 @@ exports.checkAlreadyAdded = async ctx => {
 exports.isOwner = async ctx => {
   let teamDetails = await isTeamDetailsExists(ctx.state.user.uid)
   if (teamDetails) {
-    return error(
-      "you are owner, you cant be a member of others",
-      "teamDetails"
-    )
+    return error("you are owner, you cant be a member of others", "teamDetails")
   }
   return null
 }

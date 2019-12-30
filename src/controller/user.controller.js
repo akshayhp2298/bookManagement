@@ -40,7 +40,7 @@ exports.validateLogin = async ctx => {
   const code = {
     uid: user.uid,
     ownerId: user.loginAs
-      ? loginAs.ownerId
+      ? user.loginAs.ownerId
       : user.teamDetails
       ? user.uid
       : user.ownerDetails
