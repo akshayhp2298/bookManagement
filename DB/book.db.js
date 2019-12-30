@@ -7,3 +7,21 @@ exports.createBook = book =>
     .db(db)
     .collection(collection)
     .insertOne(book)
+
+exports.getBookById = bid =>
+  mongoDB
+    .db(db)
+    .collection(collection)
+    .findOne({ bid })
+
+exports.getRoleCountOfBook = (bid, uid) =>
+  mongoDB
+    .db(db)
+    .collection(collection)
+    .countDocuments({ bid, "access.uid": uid })
+
+exports.addAccessToBook = (bid, access) =>
+  mongoDB
+    .db(db)
+    .collection(collection)
+    .updateOne({ bid }, { $push: { access: access } })

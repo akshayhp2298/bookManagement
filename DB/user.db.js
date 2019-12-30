@@ -48,3 +48,12 @@ exports.updateUser = (uid, doc) =>
     .db(db)
     .collection(collection)
     .updateOne({ uid }, { $set: doc })
+
+exports.getRoleAccess = (uid, ownerId) =>
+  mongoDB
+    .db(db)
+    .collection(collection)
+    .findOne(
+      { uid, "ownerDetails.uid": ownerId },
+      { projection: { _id: 0, "ownerDetails.role": 1, ownerDetails: { $elemMatch: { uid:ownerId } } } }
+    )

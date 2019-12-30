@@ -40,7 +40,7 @@ exports.validateLogin = async ctx => {
   const code = {
     uid: user.uid,
     ownerId: user.loginAs
-      ? user.loginAs.ownerId
+      ? user.loginAs.uid
       : user.teamDetails
       ? user.uid
       : user.ownerDetails
@@ -63,10 +63,12 @@ exports.addOwner = async ctx => {
   const { role, ownerId } = ctx.request.body
   const ownerDetail = {
     uid: ownerId,
-    role
+    role: role.toUpperCase()
   }
   const teamDetail = ctx.state.user.uid
+  //add ownerDetails in current loggedIn user
   await addOwner(ctx.state.user.uid, ownerDetail)
+  //add teamDetails in owner
   await addTeamMember(ownerId, teamDetail)
   ctx.body = { done: true, message: "owner added" }
 }

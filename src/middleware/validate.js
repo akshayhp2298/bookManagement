@@ -12,7 +12,6 @@ module.exports = validators => async (ctx, next) => {
     result =>
       result && errors.push({ message: result.message, field: result.field })
   )
-  console.log(errors)
   const properties = {
     reasons: errors.map(err => ({
       message: err.message,
