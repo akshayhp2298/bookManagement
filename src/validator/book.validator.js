@@ -1,5 +1,7 @@
 import { error, nameValidator } from "./user.validator"
 import { getRoleCountOfBook } from "../../DB/book.db"
+
+//validate book's field title and author
 exports.validateBook = ctx => {
   const { title, author } = ctx.request.body
   if (typeof title !== "string" || typeof author !== "string")
@@ -11,6 +13,7 @@ exports.validateBook = ctx => {
   return null
 }
 
+//validate user has access to book or not  
 exports.validateBookAccessDetails = ctx => {
   const { bid, uid } = ctx.request.body
   const { role } = ctx.state.user
@@ -22,6 +25,7 @@ exports.validateBookAccessDetails = ctx => {
   return null
 }
 
+//validate user has access to add access(admin and owner)
 exports.validateRoleToAddAccess = async ctx => {
   const cnt = await getRoleCountOfBook(ctx.request.body.bid, ctx.state.user.uid)
   if (!cnt) {
@@ -30,6 +34,7 @@ exports.validateRoleToAddAccess = async ctx => {
   return null
 }
 
+//validate user has already access
 exports.validateBookRoleExists = async ctx => {
   const cnt = await getRoleCountOfBook(
     ctx.request.body.bid,

@@ -1,4 +1,6 @@
 import jwt from "../../Auth/index"
+
+//check user has access to book or not
 exports.checkRole = (ctx, next) => {
   try {
     const token = ctx.req.headers.authorization

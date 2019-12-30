@@ -11,7 +11,9 @@ export default Router => {
   const router = new Router({
     prefix: "/book"
   })
+
   router.post("/add", checkRole, validate([validateBook]), addBook)
+
   router.post(
     "/add/access",
     checkRole,

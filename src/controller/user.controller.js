@@ -10,6 +10,7 @@ import {
   updateUser
 } from "../../DB/user.db"
 
+//switch token to change owner
 exports.switchToken = async ctx => {
   const { ownerId, role } = ctx.request.body
   const { uid } = ctx.state.user
@@ -21,11 +22,14 @@ exports.switchToken = async ctx => {
   let token = getToken(code)
   ctx.body = { response: { token } }
 }
+
+//get user data
 exports.getSelf = async ctx => {
   const user = await getUserByUid(ctx.state.user.uid)
   ctx.body = { user }
 }
 
+//create new user
 exports.createUser = async ctx => {
   const { name, email, password } = ctx.request.body
   const uid = uuid()
@@ -33,11 +37,13 @@ exports.createUser = async ctx => {
   ctx.body = { done: true, message: "user created", uid }
 }
 
+//validate login
 exports.validateLogin = async ctx => {
   const user = await getUserByEmail(ctx.request.body.email)
   const password = md5(ctx.request.body.password)
   password !== user.password && ctx.throw(401, "Authentication Error")
-  const code = {
+  //login details with loginAs field that provides ownerDetails and role 
+  const loginDetails = {
     uid: user.uid,
     ownerId: user.loginAs
       ? user.loginAs.uid
@@ -54,11 +60,12 @@ exports.validateLogin = async ctx => {
       ? user.ownerDetails[0].role
       : ""
   }
-  let token = getToken(code)
-  await updateUser(user.uid, { loginAs: code })
+  let token = getToken(loginDetails)
+  await updateUser(user.uid, { loginAs: loginDetails })
   ctx.body = { done: true, token }
 }
 
+//add owner to user
 exports.addOwner = async ctx => {
   const { role, ownerId } = ctx.request.body
   const ownerDetail = {
