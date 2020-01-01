@@ -1,6 +1,6 @@
 import uuid from "uuid/v1"
 import md5 from "md5"
-import { getToken } from "../../Auth"
+import { getToken } from "../Auth"
 import {
   getUserByEmail,
   createUser,
@@ -20,7 +20,7 @@ exports.switchToken = async ctx => {
     role
   }
   let token = getToken(code)
-  ctx.body = { response: { token } }
+  ctx.body = { token }
 }
 
 //get user data
@@ -42,7 +42,7 @@ exports.validateLogin = async ctx => {
   const user = await getUserByEmail(ctx.request.body.email)
   const password = md5(ctx.request.body.password)
   password !== user.password && ctx.throw(401, "Authentication Error")
-  //login details with loginAs field that provides ownerDetails and role 
+  //login details with loginAs field that provides ownerDetails and role
   const loginDetails = {
     uid: user.uid,
     ownerId: user.loginAs

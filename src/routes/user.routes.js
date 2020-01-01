@@ -13,6 +13,7 @@ import {
   validateAddOwnerDetails,
   checkAlreadyAdded,
   isOwner,
+  validateName,
   validateOwnerIdAndRole
 } from "../validator/user.validator"
 import { validateToken } from "../middleware/auth.middleware"
@@ -24,7 +25,7 @@ export default Router => {
     .get("/self", validateToken, getSelf)
     .post(
       "/",
-      validate([validateEmail, validatePassword, isEmailExists]),
+      validate([validateName, validateEmail, validatePassword, isEmailExists]),
       createUser
     )
     .post(

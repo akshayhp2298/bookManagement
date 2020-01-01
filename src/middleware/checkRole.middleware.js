@@ -1,4 +1,4 @@
-import jwt from "../../Auth/index"
+import jwt from "../Auth"
 
 //check user has access to book or not
 exports.checkRole = (ctx, next) => {

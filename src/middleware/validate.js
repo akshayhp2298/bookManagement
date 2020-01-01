@@ -3,9 +3,6 @@ const blueBird = require("bluebird")
 module.exports = validators => async (ctx, next) => {
   const errors = []
   const results = await blueBird.map(validators, async validator => {
-    if (typeof validator !== "function") {
-      throw new Error("Validator is not a function")
-    }
     return await validator(ctx, next)
   })
   results.forEach(

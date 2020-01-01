@@ -1,4 +1,4 @@
-import jwt from "../../Auth/index"
+import jwt from "../Auth"
 exports.validateToken = (ctx, next) => {
   try {
     const token = ctx.req.headers.authorization

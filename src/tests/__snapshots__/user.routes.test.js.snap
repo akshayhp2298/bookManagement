@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`user route test should return token for login 1`] = `
+Object {
+  "done": true,
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIyYTMzYTMyMC0yY2EzLTExZWEtOTAwNy0yZDU0MGM3ZjZlZjciLCJvd25lcklkIjoiIiwicm9sZSI6IiIsImlhdCI6MTU3Nzg4ODk4OH0.JwqcFikOdphzNsPImomgrrkvk-rYvpOxfHqwmK3CyKw",
+}
+`;
+
+exports[`user route test should return validation failed for login 1`] = `
+Object {
+  "message": "validation failed",
+  "reasons": Array [
+    Object {
+      "field": "email",
+      "message": "email not found",
+    },
+    Object {
+      "field": "password",
+      "message": "password not found",
+    },
+    Object {
+      "field": "email",
+      "message": "email is not exists",
+    },
+  ],
+  "status": 401,
+}
+`;

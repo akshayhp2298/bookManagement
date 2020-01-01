@@ -5,6 +5,6 @@ import bookRouter from "./book.routes"
 
 const routers = [userRouter,bookRouter]
 
-router.get("/", () => console.log("hello go"))
+router.get("/", (ctx) => ctx.body = {message:"received"})
 routers.forEach(route => router.use(route(Router).routes()))
 export default router
